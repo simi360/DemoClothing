@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import { UserContext } from "../../contexts/user.context";
+// import { UserContext } from "../../contexts/user.context";
 import Button from '../button/button.component'
 
 import './sign-up-form.styles.scss'
@@ -18,7 +18,7 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
 
-    const {setCurrentUser} = useContext(UserContext)
+    // const {setCurrentUser} = useContext(UserContext) <- happening in user.context
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
@@ -34,7 +34,8 @@ const SignUpForm = () => {
 
         try {
             const {user} = await createAuthUserWithEmailAndPassword( email, password);
-            setCurrentUser(user);
+            // setCurrentUser(user); <- happening in user.context
+            // can't create user document from auth in user.context as we need to add displayName
             await createUserDocumentFromAuth(user, {displayName});
             resetFormFields();
         } catch (error){

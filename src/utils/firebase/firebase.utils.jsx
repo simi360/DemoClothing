@@ -5,8 +5,9 @@ import {getAuth,
   GoogleAuthProvider, 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
-  signOut} 
-  from 'firebase/auth'
+  signOut,
+  onAuthStateChanged
+  } from 'firebase/auth'
 import {getFirestore, doc, getDoc, setDoc} from 'firebase/firestore'
 const firebaseConfig = {
     apiKey: "AIzaSyAJHrL_f8NIcYRCczTFe0Fm5ikKQGHTFKM",
@@ -34,7 +35,7 @@ const firebaseConfig = {
 //Setting up firestore db to start the collection of users
   export const db = getFirestore();
 
-  export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
+  export const createUserDocumentFromAuth = async (userAuth, additionalInformation={}) => {
     if (!userAuth) return;
 
     const userDocRef = doc(db, 'users', userAuth.uid);
@@ -77,3 +78,5 @@ const firebaseConfig = {
     export const signOutUser = async () => {
       await signOut(auth);
     }
+
+    export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)
