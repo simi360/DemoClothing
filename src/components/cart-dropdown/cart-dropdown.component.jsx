@@ -6,11 +6,18 @@ import { CartContext } from '../../contexts/cart.context';
 import './cart-dropdown.styles.scss';
 
 const CartDropdown = () => {
-    const {cartItems} = useContext(CartContext);
+    const {cartItems, cartCount} = useContext(CartContext);
     const navigate = useNavigate();
 
     const goToCheckoutHandler = () => {
         navigate('/checkout');
+    }
+    if (cartCount===0){
+        return (
+            <div className='cart-dropdown-container empty-message'>
+                Your cart is empty!
+            </div>
+        )
     }
     return (
         <div className='cart-dropdown-container'>
