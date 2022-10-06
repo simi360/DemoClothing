@@ -1,4 +1,4 @@
-#DEMO CLOTHING APP
+DEMO CLOTHING APP
 
 # Getting Started with Create React App
 
