@@ -6,10 +6,12 @@ import { CartContext } from '../../contexts/cart.context';
 import {CartDropdownContainer, EmptyMessage, CartItems} from './cart-dropdown.styles.jsx';
 
 const CartDropdown = () => {
-    const {cartItems} = useContext(CartContext);
+    const {cartItems, setIsCartOpen, isCartOpen} = useContext(CartContext);
     const navigate = useNavigate();
+    
 
     const goToCheckoutHandler = () => {
+        setIsCartOpen(!isCartOpen);
         navigate('/checkout');
     };
 
