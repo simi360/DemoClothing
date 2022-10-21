@@ -10,10 +10,8 @@ const Category = () => {
     const {category} = useParams();
     const categoriesMap = useSelector(selectCategoriesMap);
     const [products, setProducts] = useState(categoriesMap[category]);
-    console.log('routes>category.component> render/re-rendering component')
 
     useEffect (() => {
-        console.log('routes>category.component> effect fired- calling setProducts')
         setProducts(categoriesMap[category]);
     }, [category, categoriesMap])
 
