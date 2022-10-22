@@ -9,7 +9,7 @@ export const selectCartItems = createSelector(
 
 export const selectIsCartOpen = createSelector(
     [selectCartReducer],
-    (cart) => cart.IsCartOpen
+    (cart) => cart.isCartOpen
 );
 
 export const selectCartCount = createSelector(
