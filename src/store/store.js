@@ -4,6 +4,7 @@ import { rootReducer } from './root-reducer';
 
 const loggerMiddleware = (store) => (next) => (action) => {
   if(!action.type) {
+    console.log('DOES NOT HAVE A TYPE', action.type)
     return next(action);
   }
   console.log('type: ', action.type);

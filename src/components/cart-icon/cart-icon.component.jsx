@@ -7,14 +7,18 @@ import { setIsCartOpen } from '../../store/cart/cart.action'
 import {CartIconContainer, ShoppingIcon, ItemCount} from './cart-icon.styles.jsx'
 
 
+
 const CartIcon = () => {
     // const {isCartOpen, setIsCartOpen, cartCount} = useContext(CartContext);
     const dispatch = useDispatch();
     const isCartOpen = useSelector(selectIsCartOpen);
     const cartCount = useSelector(selectCartCount);
-
-    const toggleIsCartOpen = () => dispatch(setIsCartOpen(!isCartOpen));
-
+  
+    const toggleIsCartOpen = () => {
+        console.log('cart-icon.component> ', isCartOpen);
+        dispatch(setIsCartOpen(!isCartOpen));
+        console.log('cart-icon.component 2 > ', isCartOpen);
+    }
     return  (<CartIconContainer onClick={toggleIsCartOpen}>
                 <ShoppingIcon />
                 <ItemCount>{cartCount}</ItemCount>
