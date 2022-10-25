@@ -6,11 +6,17 @@ import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 
-
+/**
+ * Were using blacklist before to blacklist 'user' state as AuthListener persists the user.
+ * Now using whitelist to only persist cart items
+ * Not persisting categories, as using redux-thunk to do the async function and using Spinner to let user know that the
+ * page is loading
+ */
 const persistConfig = {
   key: 'root',
   storage,
-  blackList: ['user']
+  // blackList: ['user']
+  whitelist: ['cart'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
