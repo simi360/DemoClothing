@@ -7,6 +7,7 @@ import {
     signUpFailed,
     signOutFailed,
     signOutSuccess,
+    signOutStart,
 } from './user.action';
 import { 
     getCurrentUser, 
@@ -117,7 +118,7 @@ export function* userSaga() {
         call(onEmailSignInStart),
         call(onSignUpStart),
         call(onSignUpSuccess),
-        call(signOut),
+        call(onSignOutStart),
     ])
 }
 
