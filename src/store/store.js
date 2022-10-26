@@ -4,7 +4,10 @@ import { loggerMiddleware } from './middleware/logger';
 import { rootReducer } from './root-reducer';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { rootSaga } from './root-saga';
+
 
 /**
  * Were using blacklist before to blacklist 'user' state as AuthListener persists the user.
@@ -19,9 +22,14 @@ const persistConfig = {
   whitelist: ['cart'],
 }
 
+const sagaMiddleware = createSagaMiddleware();
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middleWares = [process.env.NODE_ENV !== 'production' && loggerMiddleware,thunk].filter(Boolean);
+const middleWares = [process.env.NODE_ENV !== 'production' && loggerMiddleware, sagaMiddleware].filter(Boolean);
+
+// when using thunk:
+// const middleWares = [process.env.NODE_ENV !== 'production' && loggerMiddleware,thunk].filter(Boolean);
 // const middleWares = [process.env.NODE_ENV === 'development' && logger].filter(
 //     Boolean
 //   );
@@ -31,5 +39,7 @@ const composeEnhancer = (process.env.NODE_ENV !== 'production' && window && wind
 const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers);
+
+sagaMiddleware.run(rootSaga);
 
 export const persistor = persistStore(store);
