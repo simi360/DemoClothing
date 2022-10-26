@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
+import { signUpStart } from "../../store/user/user.action";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 // import { UserContext } from "../../contexts/user.context";
@@ -15,6 +17,7 @@ const defaultFormFields = {
 }
 
 const SignUpForm = () => {
+    const dispatch = useDispatch();
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
 
@@ -33,10 +36,11 @@ const SignUpForm = () => {
         }
 
         try {
-            const {user} = await createAuthUserWithEmailAndPassword( email, password);
-            // setCurrentUser(user); <- happening in user.context
-            // can't create user document from auth in user.context as we need to add displayName
-            await createUserDocumentFromAuth(user, {displayName});
+            dispatch(signUpStart(email, password, displayName));
+            // const {user} = await createAuthUserWithEmailAndPassword( email, password); <- using redux-saga instead
+            // // setCurrentUser(user); <- happening in user.context
+            // // can't create user document from auth in user.context as we need to add displayName
+            // await createUserDocumentFromAuth(user, {displayName});
             resetFormFields();
         } catch (error){
             if (error.code === 'auth/email-already-in-use'){
