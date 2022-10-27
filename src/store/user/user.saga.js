@@ -7,7 +7,6 @@ import {
     signUpFailed,
     signOutFailed,
     signOutSuccess,
-    signOutStart,
 } from './user.action';
 import { 
     getCurrentUser, 
