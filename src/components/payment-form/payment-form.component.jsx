@@ -25,10 +25,13 @@ const PaymentForm = () => {
         const response = await fetch('/.netlify/functions/create-payment-intent', {
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
             },
-            body: JSON.stringify({amount: amount*100})
-        }).then(res=> res.json());
+            body: JSON.stringify({ amount: amount * 100 }),
+          }).then((res) => {
+            return res.json();
+          });
+
 
         const clientSecret = response.paymentIntent.clint_secret;
         // console.log("Debugging log ~ file: payment-form.component.jsx ~ line 32 ~ paymentHandler ~ clientSecret", clientSecret);
@@ -55,19 +58,16 @@ const PaymentForm = () => {
             }
         }
     }
-
-    // const payment2Handler = () => {
-    //     console.log("Debugging log ~ file: payment-form.component.jsx ~ line 58 ~ payment2Handler ~ payment2Handler", payment2Handler);
-    // }
     
     return (
         <PaymentFormContainer>
-            <FormContainer onSubmit={paymentHandler} >
+            <FormContainer  >
                 <h2>Credit Card Payment: </h2>
                 <CardElement />
                 <PaymentButton 
                 isLoading={isProcessingPayment}
                 buttonType={BUTTON_TYPE_CLASSES.inverted}
+                onClick={paymentHandler}
                 >Pay Now</PaymentButton>
             </FormContainer>
         </PaymentFormContainer>
